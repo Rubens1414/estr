@@ -1,0 +1,112 @@
+public class GameSketch extends PApplet{
+    //Herramientas:
+    int tiempo,tiempo2;
+    int cambio_es1=0;
+    Casillas casillas = new Casillas();
+    Lista_Circular Prueba = new Lista_Circular();
+    
+
+    int p=0;
+    @Override
+    public void settings() {
+        size(1280, 720);
+    }
+
+    @Override
+    public void setup() {
+        
+    }
+
+    @Override
+    public void draw() {
+        background(0);
+        tiempo = tiempo+1;
+        if(cambio_es1==1){
+            tiempo2= tiempo2+1;
+        }   
+        presentacion();
+        if(cambio_es1==2){
+            mostrar_tarjeta_casilla();
+           System.out.println("??");
+        }
+        
+    }
+    void presentacion(){
+        PImage marca,inicio,seleccion,tablero;
+        marca = loadImage("marca.png");
+        inicio = loadImage("inicio.png");
+        seleccion= loadImage("seleccion.png");
+        tablero=loadImage("Tablero.png");
+        if(cambio_es1==0){
+        if(tiempo<=10){
+          image(marca, 0,0);
+          
+        }else{
+         image(inicio, 0,0);
+         tiempo2=0;
+        }
+      }
+        if(cambio_es1==1){
+         
+          image(seleccion,0,0);
+        }
+        if(cambio_es1==2){
+
+          image(tablero,0,0);           
+        }
+    }
+    void seleccion_jugadores(){
+        
+    }
+   
+   void mostrar_tarjeta_casilla(){
+        
+            casillas.mostrar();
+    }
+
+  
+   
+    
+    
+    @Override
+
+    public void mousePressed(){
+        //Anotar puntos
+        if(mouseButton==LEFT && mouseX>=259  && mouseX <= 337 && mouseY >= 595  && mouseY <= 674 &&cambio_es1==2 ){
+            Prueba.agregarAlInicio(2);
+        }
+        if(mouseButton==LEFT){
+          System.out.println("x: "+mouseX+" y: "+mouseY);
+           
+        }
+        //CAMBIOS DE ESCENAS:
+        //ESCENA DE SELECCION:
+        if(mouseButton==LEFT && mouseX>=403 && mouseX <= 870 && mouseY >= 389 && mouseY <= 441&&cambio_es1==0){
+        cambio_es1=1;
+        }
+        //ESCENA PARA VOLVER :
+        if(mouseButton==LEFT && mouseX>=543 && mouseX <= 737 && mouseY >= 594 && mouseY <= 642 &&cambio_es1==1){
+            cambio_es1=0;       
+            tiempo2=0;
+        }
+        //Tablero:
+        // 2 jugadores
+        if(mouseButton==LEFT && mouseX>=250 && mouseX <= 382 && mouseY >= 358 && mouseY <= 488 && cambio_es1==1&&tiempo2>2){
+            cambio_es1=2;       
+        }
+        //3 jugadores
+        if(mouseButton==LEFT && mouseX>=565  && mouseX <= 700 && mouseY >= 356 && mouseY <= 488 && cambio_es1==1&&tiempo2>2){
+            cambio_es1=2;       
+        }
+        // 4 jugadores
+        if(mouseButton==LEFT && mouseX>=250 && mouseX <= 382 && mouseY >= 356 && mouseY <= 488 && cambio_es1==1&&tiempo2>2){
+            cambio_es1=2;       
+        }
+    }
+    
+    public void run() {
+        String[] processingArgs = { this.getClass().getName() };
+        PApplet.runSketch(processingArgs, this);
+    
+    }
+}
